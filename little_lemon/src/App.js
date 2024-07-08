@@ -2,35 +2,44 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import './App.css';
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import BookingForm, {dateToString} from './BookingForm';
+import { Routes, Route, Outlet, Link, useNavigate} from "react-router-dom";
+import BookingForm from './BookingForm';
 import { useReducer } from 'react';
+import { fetchAPI, submitAPI } from './api';
+import { ConfirmationBooking } from './ConfirmationBooking';
 
-const reducer = (state, action) => {
-  const {date, time} = action;
-  let dateToChange = JSON.parse(JSON.stringify(state[date]));
-  let newDateEntry = dateToChange.filter((iTime) => iTime !== time);
+const reducer = (_, action) => {
   return {
-    ...state,
-    [date]: newDateEntry
+    date: action.date,
+    times: fetchAPI(action.date)
   }
 }
 
 function App() {
-  const date = new Date();
-  let initialState = {};
-  for (let i = 0; i < 7; i++) {
-    date.setDate(date.getDate() + 1);
-    const key = dateToString(date);
-    initialState[key] = ['17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
-  }
-
+  const curDate = new Date();
+  let initialState = {
+    date: curDate,
+    times: fetchAPI(curDate)
+  };
   const [availableTimes, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
+  const submitForm = (e) => {
+    if (submitAPI(e) ===  true) {
+      navigate('booking/confirmed');
+    }
+  }
   return (
     <Routes>
     <Route path="/" element={<Layout />}>
       <Route index element={<Main />} />
-      <Route path="booking" element={<BookingForm availableTimes={availableTimes} updateTimes={(date, time) => dispatch({date, time})}/>} />
+      <Route path="booking">
+        <Route index element={
+          <BookingForm availableTimes={availableTimes}
+            updateTimes={(date) => dispatch({date})}
+            submitForm={submitForm}
+          />} />
+        <Route path="confirmed" element={<ConfirmationBooking />}></Route>
+      </Route>
       <Route path="*" element={<NoMatch />} />
     </Route>
   </Routes>
