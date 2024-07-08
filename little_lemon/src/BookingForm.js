@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from 'react-router-dom';
 
 export const dateToString = (date) => {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -13,11 +14,15 @@ function BookingForm({availableTimes, updateTimes}) {
     const [guests, setGuests] = useState(1);
     const [occasion, setOccasion] = useState('birthday');
     const handleSubmit = (e) => {
-        console.log(date, time);
         updateTimes(date, time);
         e.preventDefault();
         alert('success');
     }
+
+    useEffect(() => {
+        setDate(possibleDates[0]);
+        setTime(availableTimes[possibleDates[0]][0])
+    }, [availableTimes])
     return (
         <div style={{width: '100%', display: 'flex', justifyContent:'center', padding: '4%'}}>
         <form style={{display: 'grid', maxWidth: '200px', gap: '20px'}} onSubmit={handleSubmit}>

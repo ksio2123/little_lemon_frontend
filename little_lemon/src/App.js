@@ -10,11 +10,9 @@ const reducer = (state, action) => {
   const {date, time} = action;
   let dateToChange = JSON.parse(JSON.stringify(state[date]));
   let newDateEntry = dateToChange.filter((iTime) => iTime !== time);
-  let newObject = {};
-  newObject[date] = newDateEntry;
   return {
     ...state,
-    ...newObject
+    [date]: newDateEntry
   }
 }
 
