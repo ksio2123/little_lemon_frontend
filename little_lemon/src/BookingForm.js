@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from 'react-router-dom';
 
 export const dateToString = (date) => {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -22,13 +21,13 @@ function BookingForm({availableTimes, updateTimes}) {
     useEffect(() => {
         setDate(possibleDates[0]);
         setTime(availableTimes[possibleDates[0]][0])
-    }, [availableTimes])
+    }, [availableTimes, possibleDates])
     return (
         <div style={{width: '100%', display: 'flex', justifyContent:'center', padding: '4%'}}>
         <form style={{display: 'grid', maxWidth: '200px', gap: '20px'}} onSubmit={handleSubmit}>
-            <label for="res-date">Choose date</label>
+            <label htmlFor="res-date">Choose date</label>
             <DatePicker id="res-date" onChange={(date) => setDate(dateToString(date))} selected={date} includeDates={possibleDates}/>
-            <label for="res-time">Choose time</label>
+            <label htmlFor="res-time">Choose time</label>
             <select id="res-time" value={time} onChange={(e) => setTime(e.target.value)}>
                 {availableTimes[date].map((time) => {
                     return (
@@ -36,9 +35,9 @@ function BookingForm({availableTimes, updateTimes}) {
                     )
                 })}
             </select>
-            <label for="guests">Number of guests</label>
+            <label htmlFor="guests">Number of guests</label>
             <input type="number" placeholder="1" min="1" max="10" id="guests" value={guests} onChange={(e) => setGuests(e.target.value)}/>
-            <label for="occasion">Occasion</label>
+            <label htmlFor="occasion">Occasion</label>
             <select value={occasion} id="occasion" onChange={(e) => {setOccasion(e.target.value)}}>
                 <option value="birthday" >Birthday</option>
                 <option value="anniversary">Anniversary</option>
