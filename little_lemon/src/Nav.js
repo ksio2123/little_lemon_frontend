@@ -1,13 +1,15 @@
+
 function Nav() {
+
+    const links = ['Home', 'About', 'Menu', 'Reservation', 'Order Online', 'Login'];
     return (
-        <nav>
-            <ul>
-                <li><a href='/'>HOME</a></li>
-                <li><a href='/'>ABOUT</a></li>
-                <li><a href='/'>MENU</a></li>
-                <li><a href='/'>RESERVATION</a></li>
-                <li><a href='/'>ORDER ONLINE</a></li>
-                <li><a href='/'>LOGIN</a></li>
+        <nav className='header__nav'>
+            <ul className='header__nav-ul'>
+                {links.map((link, i) => {
+                    return (
+                        <li key={i} className="header__nav-li"><a href='/'> {link}</a></li>
+                    )
+                })}
             </ul>
         </nav>
     );
