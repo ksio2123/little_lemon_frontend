@@ -2,7 +2,6 @@
   "name": "little_lemon",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ksio2123.github.io/little_lemon",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^15.0.5",
