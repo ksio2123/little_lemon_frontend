@@ -1,7 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import BookingForm from './BookingForm';
 
-
 test('Renders the BookingForm heading', () => {
     let availableTimes = {
         times: ['17:00', '18:00', '19:00', '20:00', '21:00', '22:00'],
