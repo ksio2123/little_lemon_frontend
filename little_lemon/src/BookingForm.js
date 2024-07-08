@@ -20,7 +20,13 @@ function BookingForm({availableTimes, updateTimes, submitForm}) {
         <div style={{width: '100%', display: 'flex', justifyContent:'center', padding: '4%'}}>
         <form style={{display: 'grid', maxWidth: '200px', gap: '20px'}} onSubmit={handleSubmit}>
             <label htmlFor="res-date">Choose date</label>
-            <DatePicker id="res-date" onChange={(date) => updateTimes(date)} selected={date} />
+            {/* <DatePicker id="res-date" onChange={(date) => updateTimes(date)} selected={date} /> */}
+            <input type="date"
+                id="res-date"
+                value={date.toISOString().split('T')[0]}
+                onChange={(e) => {
+                    updateTimes((new Date(e.target.value)))}
+                } />
             <label htmlFor="res-time">Choose time</label>
             <select id="res-time" value={time} onChange={(e) => setTime(e.target.value)}>
                 {availableTimes.times.map((time) => {
