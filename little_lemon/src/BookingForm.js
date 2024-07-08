@@ -7,20 +7,22 @@ export const dateToString = (date) => {
 }
 
 function BookingForm({availableTimes, updateTimes}) {
-    console.log(availableTimes);
-    const [date, setDate] = useState(Object.keys(availableTimes)[0]);
-    const [time, setTime] = useState();
+    const possibleDates = Object.keys(availableTimes).filter((date) => availableTimes[date].length > 0);
+    const [date, setDate] = useState(possibleDates[0]);
+    const [time, setTime] = useState(availableTimes[possibleDates[0]][0]);
     const [guests, setGuests] = useState(1);
     const [occasion, setOccasion] = useState('birthday');
     const handleSubmit = (e) => {
+        console.log(date, time);
         updateTimes(date, time);
         e.preventDefault();
+        alert('success');
     }
     return (
         <div style={{width: '100%', display: 'flex', justifyContent:'center', padding: '4%'}}>
         <form style={{display: 'grid', maxWidth: '200px', gap: '20px'}} onSubmit={handleSubmit}>
             <label for="res-date">Choose date</label>
-            <DatePicker id="res-date" onChange={(date) => setDate(dateToString(date))} selected={date} includeDates={Object.keys(availableTimes)}/>
+            <DatePicker id="res-date" onChange={(date) => setDate(dateToString(date))} selected={date} includeDates={possibleDates}/>
             <label for="res-time">Choose time</label>
             <select id="res-time" value={time} onChange={(e) => setTime(e.target.value)}>
                 {availableTimes[date].map((time) => {
