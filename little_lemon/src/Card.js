@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom"
+
 function Card ({title, description, img, price, bottomText}) {
     return (
         <article className="card__article">
@@ -8,7 +10,7 @@ function Card ({title, description, img, price, bottomText}) {
                     <h3 className="card__article-price">{price}</h3>
                 </div>
                 <p className="card__article-description">{description}</p>
-                <a href="/" className="card__article-bottom-text">{bottomText}</a>
+                <Link to="/" className="card__article-bottom-text">{bottomText}</Link>
             </div>
         </article>
     )
