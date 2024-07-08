@@ -35,3 +35,17 @@ test('validate updateTimes', async () => {
         expect(updateTimes).toHaveBeenCalledTimes(1);
     });
 })
+
+test('errors on guest number greater than 10', async () => {
+    let availableTimes = {
+        times: ['17:00'],
+        date: new Date()
+    }
+    const {container} = render(<BookingForm availableTimes={availableTimes} />);
+    const guestInput = container.querySelector('#guests');
+    fireEvent.change(guestInput, {target:{value: 13}})
+    await waitFor(() => {
+        const errorMessage = screen.getByText(/Need to be between 1 and 10 inclusively/i)
+        expect(errorMessage).toBeInTheDocument();
+    });
+})
